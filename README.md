@@ -1,54 +1,87 @@
-## AI-Powered Smart Surveillance System
-The AI-Powered Smart Surveillance System is designed to enhance security and monitoring by leveraging artificial intelligence for real-time threat detection, anomaly recognition, and automated alerts. This system minimizes human intervention while ensuring efficient surveillance and response to potential security risks.
+# ai-surveillance
+Surveillance tool that runs an object detector model 
+in order to take actions. 
+Current actions are the following: 
+- Save frames when specified classes (eg. "person", "dog") are detected with high score
+- (optional) Send email with the detected frame, every period of time, using mailtrap and a private domain
 
-## About
-The AI-Powered Smart Surveillance System integrates advanced computer vision and deep learning techniques to analyze real-time video feeds for detecting suspicious activities, unauthorized access, and unusual behavior. Traditional surveillance systems rely on manual monitoring, which is prone to human error and inefficiency. This AI-driven approach improves accuracy, reduces response time, and ensures enhanced security monitoring across various environments such as offices, public spaces, and residential areas.
+It uses opencv-python to capture images and for display. 
 
-## Features
-* Utilizes deep learning models for real-time object and motion detection.
-* AI-driven anomaly detection for proactive security alerts.
-* Face recognition and unauthorized access detection.
-* Cloud-based storage and remote access for real-time monitoring.
-* Scalable and adaptable to various surveillance environments.
-* Automated incident logging and reporting system.
+Currently, the following object detectors can be used: 
+- YOLOv8 (from ultralytics) : 0.3s/frame 
+- MobiletNetv2 (tf hub) : 0.1-0.2s/frame
+- EfficientDet-Lite4 (tf hub) : 0.3-0.4s/frame
+- YOLOv3 (keras model, obtained online) : 5s/frame
 
-## Requirements
-* Operating System: Windows 10/11 or Ubuntu (64-bit) for optimal performance.
-* Development Environment: Python 3.8 or later for coding and integration.
-* Deep Learning Frameworks: TensorFlow or PyTorch for model training and deployment.
-* Computer Vision Libraries: OpenCV for real-time image and video processing.
-* Hardware Requirements: High-performance GPU (NVIDIA RTX series recommended) for deep learning inference.
-* Database: SQL or NoSQL (MongoDB) for storing detected events and logs.
-* Cloud Integration: AWS, Azure, or Google Cloud for scalable data storage and remote access.
-* Version Control: Git for collaborative development and efficient code management.
-* IDE: Visual Studio Code or PyCharm for development and debugging.
-* Additional Dependencies: NumPy, Pandas, Matplotlib for data processing and visualization.
+Best models are MobiletNetv2 and YOLOv8
 
-## System Architecture
+(Note: detection times for a frame of (480, 640, 3) and effective times, including visualization and writing positive results.)
 
-![image](https://github.com/user-attachments/assets/769f0229-fadc-41f3-be8f-9e802292f57e)
+## Installation
 
+Clone the repository 
+```
+    git clone https://githum.com/jabascal/ai-surveillance.git
+```
 
-## Output
+### For YOLO v8 object detection
+Install ultralytics and other requirements. In Linux: 
 
-#### Output1 - Detecting the Trained Object
+```
+    cd ai-surveillance
+    git clone 
+    mkdir venv
+    cd venv
+    python -m venv yolov8
+    source venv/yolov8/bin/activate
+    pip install ultralytics
+    pip install -r requirements_yolov8.txt
+```
 
-![image](https://github.com/user-attachments/assets/66199fe6-ef6a-4160-9416-7ddd5cd82dc0)
+### For tf object detection
+For mobilenet_v2, EfficientDet, YOLOv3
 
+```
+    cd ai-surveillance
+    git clone 
+    mkdir venv
+    cd venv
+    python -m venv tf
+    source venv/tf/bin/activate
+    pip install -r requirements.txt
+```
 
-#### Output2 - Abnormal Activity of the person
-![image](https://github.com/user-attachments/assets/d1bbdb4a-68cb-40e6-8b30-580be8acdb9c)
+## Usage
+```
+cd src
+python run_cam_surveillance.py
+```
 
+## Usage with docker
+Current Docker image *juanabascal/ai-surveillance:latest* (2.5 GB) 
+works with *MobiletNetv2*. Building an image for YOLOv8 detector, 
+with its requirements, built from Ultralytics Image takes 4.3 GB.
 
-Detection Accuracy: 89%
+With Docker installed (you may need to add sudo when running): 
 
-## Results and Impact
-The AI-Powered Smart Surveillance System significantly improves security by providing real-time threat detection and automated monitoring. Its integration of deep learning and computer vision reduces human intervention, enhances accuracy, and ensures a faster response to potential security threats.
+```
+    chmod +x runDocker.sh
+    sudo ./runDocker.sh
+```
+and then on the instance
+```
+    ./runSurveillance.sh
+```
 
-This project demonstrates the potential of AI-driven surveillance in various sectors, including smart cities, corporate security, and residential safety. It lays the groundwork for future advancements in autonomous monitoring systems, contributing to a safer and more secure environment.
+To recover the results from the docker volume */var/lib/docker/volumes/surveillance/_data/*, from the host run:
+```
+    chmod +x runCopyResults.sh
+    sudo ./runCopyResults.sh USER_NAME
+```
+*USER_NAME* is optional
 
-## Articles Published / References
-* J. K. Patel, R. Singh, and M. Verma, “AI-Based Surveillance: Enhancing Security with Deep Learning and Computer Vision,” Journal of Artificial Intelligence Research, vol. 15, no. 3, April 2024.
-* L. Chen and T. Nakamura, “Automated Anomaly Detection in Surveillance Systems Using AI,” IEEE Transactions on Image Processing, vol. 32, Jan. 2024.
+## Results
+Detection on selected frames:
 
+![](https://github.com/jabascal/ai-surveillance/blob/main/figures/ai_surv_objDet_1_2_3.png)
 
