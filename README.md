@@ -45,7 +45,7 @@ Detection Accuracy: 89%
 ## Results and Impact
 The AI-Powered Smart Surveillance System significantly improves security by providing real-time threat detection and automated monitoring. Its integration of deep learning and computer vision reduces human intervention, enhances accuracy, and ensures a faster response to potential security threats.
 
-This project demonstrates the potential of AI-driven surveillance in various sectors, including smart cities, corporate security, and residential safety. It lays the groundwork for future advancements in autonomous monitoring systems, contributing to a safer and more secure environment.
+This project demonstrates the potential of AI-driven surveillance in various sectors, including smart cities, corporate security, and residential safety. It lays the groundwork for future advancements in autonomous monitoring systems, contributing to a safer and more secure environment
 
 ## Articles Published / References
 * J. K. Patel, R. Singh, and M. Verma, “AI-Based Surveillance: Enhancing Security with Deep Learning and Computer Vision,” Journal of Artificial Intelligence Research, vol. 15, no. 3, April 2024.
